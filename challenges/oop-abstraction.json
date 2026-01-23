@@ -1,0 +1,53 @@
+{
+  "id": "oop-abstraction",
+  "title": "Week 13 - Coding Challenge 1",
+  "difficulty": "Easy",
+  "description": "Learn the principle of Abstraction in Object-Oriented Programming. Create a Human class that encapsulates the essential properties and behaviors. Your class should have a 'name' property and a 'run()' method that returns a message.",
+  "starterCode": "// Create a Human class with abstraction\n// The class should have:\n// - A constructor that takes 'name' as parameter\n// - A 'name' property\n// - A run() method that returns a message\n\n// TODO: Write your code here",
+  "requirements": [
+    "Create a class named 'Human'",
+    "The constructor should accept and store a 'name' parameter",
+    "The 'name' property should be accessible",
+    "Implement a 'run()' method that returns a string",
+    "The run() method should return '[name] is running' format"
+  ],
+  "hints": [
+    "Use the 'class' keyword to define a class",
+    "Use 'constructor()' method for initialization",
+    "Store the name with 'this.name = name'",
+    "Methods don't need 'function' keyword inside classes",
+    "Use template literals or string concatenation for the message"
+  ],
+  "tests": [
+    {
+      "name": "Human class exists",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('John'); return typeof h === 'object' ? { success: true } : { success: false, message: 'Human is not a class' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Human class created successfully ✓"
+    },
+    {
+      "name": "Human has name property",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('Alice'); return h.name === 'Alice' ? { success: true } : { success: false, message: 'name property not set correctly' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "name property works correctly ✓"
+    },
+    {
+      "name": "Human has run() method",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('Bob'); return typeof h.run === 'function' ? { success: true } : { success: false, message: 'run() method does not exist' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "run() method exists ✓"
+    },
+    {
+      "name": "run() returns correct message",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('Charlie'); const result = h.run(); return result === 'Charlie is running' ? { success: true } : { success: false, message: 'Expected \"Charlie is running\", got \"' + result + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "run() returns correct format ✓"
+    },
+    {
+      "name": "Works with different names",
+      "functionName": "null",
+      "test": "function() { try { const h1 = new Human('Emma'); const h2 = new Human('David'); return h1.run() === 'Emma is running' && h2.run() === 'David is running' ? { success: true } : { success: false, message: 'run() method not working with different names' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Works with multiple instances ✓"
+    }
+  ]
+}

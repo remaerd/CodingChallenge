@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction of Creative Coding / Design Challenge</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Introduction of Creative Coding / Design Challenge</h1>
+            <p class="subtitle">Learn JavaScript by solving design challenges</p>
+        </header>
+
+        <!-- Challenge Picker -->
+        <div class="challenge-picker">
+            <label for="challenge-select">Select a Challenge:</label>
+            <select id="challenge-select">
+                <option value="">-- Choose a challenge --</option>
+            </select>
+            <span id="challenge-count" class="challenge-count"></span>
+            <button id="run-btn" class="btn btn-primary">Run Code</button>
+            <button id="reset-btn" class="btn btn-secondary">Reset Code</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left: Code Editor -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <h2>Code Editor</h2>
+                    <span id="char-count" class="char-count">0 characters</span>
+                </div>
+                <div id="code-editor"></div>
+            </div>
+
+            <!-- Right: Preview & Feedback -->
+            <div class="preview-section">
+                <!-- Challenge Description -->
+                <div class="challenge-description">
+                    <h2>Challenge Details</h2>
+                    <div id="challenge-desc" class="desc-content">
+                        <p>Select a challenge to get started</p>
+                    </div>
+                </div>
+
+                <!-- Feedback Section -->
+                <div class="feedback-section">
+                    <h2>Feedback & Tests</h2>
+                    <div id="feedback" class="feedback-content">
+                        <p class="info">Click "Run Code" to test your solution</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="js/challenge.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

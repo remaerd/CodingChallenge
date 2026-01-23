@@ -1,0 +1,66 @@
+{
+  "id": "oop-inheritance",
+  "title": "Week 13 - Coding Challenge 2",
+  "difficulty": "Medium",
+  "description": "Learn the principle of Inheritance in Object-Oriented Programming. Create an 'Animal' base class with a 'run()' method. Then create a 'Human' class that extends Animal, adding a 'name' property and overriding the run() method to return a specific message.",
+  "starterCode": "// Create an Animal base class with a run() method\n// Create a Human class that extends Animal\n// Human should have a constructor that accepts 'name'\n// Human should override the run() method\n\n// TODO: Write your code here",
+  "requirements": [
+    "Create an 'Animal' base class with a 'run()' method",
+    "Create a 'Human' class that extends Animal",
+    "The Animal's run() method should return 'Animal is running'",
+    "Human's constructor should accept and store a 'name' parameter",
+    "Human's run() method should return '[name] is running' (overriding parent method)",
+    "Use 'super()' to properly initialize the parent class"
+  ],
+  "hints": [
+    "Use 'extends' keyword to create a subclass",
+    "Use 'super()' in the constructor to call parent constructor",
+    "You can override parent methods by redefining them in the child class",
+    "Call super() before using 'this' in child constructor",
+    "The parent's run() method is still accessible if needed"
+  ],
+  "tests": [
+    {
+      "name": "Animal class exists",
+      "functionName": "null",
+      "test": "function() { try { const a = new Animal(); return typeof a === 'object' ? { success: true } : { success: false, message: 'Animal is not a class' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Animal class created ✓"
+    },
+    {
+      "name": "Animal has run() method",
+      "functionName": "null",
+      "test": "function() { try { const a = new Animal(); return typeof a.run === 'function' ? { success: true } : { success: false, message: 'Animal does not have run() method' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Animal has run() method ✓"
+    },
+    {
+      "name": "Animal run() returns correct message",
+      "functionName": "null",
+      "test": "function() { try { const a = new Animal(); const result = a.run(); return result === 'Animal is running' ? { success: true } : { success: false, message: 'Expected \"Animal is running\", got \"' + result + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Animal run() works correctly ✓"
+    },
+    {
+      "name": "Human class extends Animal",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('John'); return h instanceof Animal ? { success: true } : { success: false, message: 'Human does not extend Animal' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Human correctly extends Animal ✓"
+    },
+    {
+      "name": "Human has name property",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('Alice'); return h.name === 'Alice' ? { success: true } : { success: false, message: 'Human name property not set' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Human name property works ✓"
+    },
+    {
+      "name": "Human run() is overridden",
+      "functionName": "null",
+      "test": "function() { try { const h = new Human('Bob'); const result = h.run(); return result === 'Bob is running' ? { success: true } : { success: false, message: 'Expected \"Bob is running\", got \"' + result + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Human run() correctly overrides parent ✓"
+    },
+    {
+      "name": "Both classes work independently",
+      "functionName": "null",
+      "test": "function() { try { const a = new Animal(); const h = new Human('Charlie'); return a.run() === 'Animal is running' && h.run() === 'Charlie is running' ? { success: true } : { success: false, message: 'Classes not working independently' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Both classes work correctly ✓"
+    }
+  ]
+}

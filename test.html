@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Challenge System</title>
+</head>
+<body>
+    <h1>Challenge System Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Inline the challenge system
+        const ChallengeSystem = (() => {
+            const runTests = (code, challenge) => {
+                if (!challenge || !challenge.tests) {
+                    return {
+                        passed: 0,
+                        total: 0,
+                        results: [],
+                        message: 'No tests available'
+                    };
+                }
+
+                const results = [];
+                let passed = 0;
+
+                challenge.tests.forEach((test, index) => {
+                    try {
+                        // Execute user code and test in the same scope
+                        const combinedCode = code + `\nconst __testFn = ${test.test};\n__testFn();`;
+                        const testExecutor = new Function(combinedCode + `\nreturn __testFn();`);
+                        const result = testExecutor();
+                        
+                        if (result.success) {
+                            passed++;
+                            results.push({
+                                name: test.name,
+                                success: true,
+                                message: test.successMessage || 'Test passed ✓'
+                            });
+                        } else {
+                            results.push({
+                                name: test.name,
+                                success: false,
+                                message: result.message || 'Test failed ✗'
+                            });
+                        }
+                    } catch (error) {
+                        results.push({
+                            name: test.name,
+                            success: false,
+                            message: `Error: ${error.message}`
+                        });
+                    }
+                });
+
+                return {
+                    passed,
+                    total: challenge.tests.length,
+                    results,
+                    message: `${passed}/${challenge.tests.length} tests passed`
+                };
+            };
+
+            const validateSyntax = (code) => {
+                try {
+                    new Function(code);
+                    return { valid: true, error: null };
+                } catch (error) {
+                    return { valid: false, error: error.message };
+                }
+            };
+
+            return {
+                runTests,
+                validateSyntax
+            };
+        })();
+
+        // Test 1: Working code
+        const workingCode = `
+        class Human {
+          constructor(name) {
+            this.name = name;
+          }
+          
+          run() {
+            return this.name + ' is running';
+          }
+        }
+        `;
+
+        const testChallenge = {
+            tests: [
+                {
+                    name: "Human class exists",
+                    test: "function() { try { const h = new Human('John'); return typeof h === 'object' ? { success: true } : { success: false, message: 'Human is not a class' }; } catch(e) { return { success: false, message: e.message }; } }",
+                    successMessage: "Human class created successfully ✓"
+                },
+                {
+                    name: "Human has name property",
+                    test: "function() { try { const h = new Human('Alice'); return h.name === 'Alice' ? { success: true } : { success: false, message: 'name property not set correctly' }; } catch(e) { return { success: false, message: e.message }; } }",
+                    successMessage: "name property works correctly ✓"
+                },
+                {
+                    name: "run() returns correct message",
+                    test: "function() { try { const h = new Human('Charlie'); const result = h.run(); return result === 'Charlie is running' ? { success: true } : { success: false, message: 'Expected \"Charlie is running\", got \"' + result + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+                    successMessage: "run() returns correct format ✓"
+                }
+            ]
+        };
+
+        const result = ChallengeSystem.runTests(workingCode, testChallenge);
+        
+        let html = `<h2>Test Results</h2>
+        <p><strong>${result.message}</strong></p>
+        <ul>`;
+        
+        result.results.forEach(r => {
+            html += `<li>${r.success ? '✓' : '✗'} ${r.name}: ${r.message}</li>`;
+        });
+        
+        html += '</ul>';
+        document.getElementById('results').innerHTML = html;
+    </script>
+</body>
+</html>
