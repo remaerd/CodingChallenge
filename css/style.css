@@ -1,3 +1,26 @@
+/* ===== Solarized Color Palette ===== */
+/* 
+ * Base colors (dark theme)
+ * base03:  #002b36 - background
+ * base02:  #073642 - background highlights
+ * base01:  #586e75 - comments / secondary content
+ * base00:  #657b83 - body text / default code / primary content
+ * base0:   #839496 - body text / default code / primary content
+ * base1:   #93a1a1 - optional emphasized content
+ * base2:   #eee8d5 - background highlights (light)
+ * base3:   #fdf6e3 - background (light)
+ * 
+ * Accent colors
+ * yellow:  #b58900
+ * orange:  #cb4b16
+ * red:     #dc322f
+ * magenta: #d33682
+ * violet:  #6c71c4
+ * blue:    #268bd2
+ * cyan:    #2aa198
+ * green:   #859900
+ */
+
 /* ===== Global Styles ===== */
 * {
     margin: 0;
@@ -7,9 +30,10 @@
 
 html, body {
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    font-family: 'Source Code Pro', 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: #002b36;
+    color: #839496;
+    font-size: 12pt; /* 75% of 16px */
 }
 
 body {
@@ -23,98 +47,90 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: #fafafa;
-}
-
-/* ===== Header ===== */
-.header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px 40px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.header .subtitle {
-    font-size: 1rem;
-    opacity: 0.95;
-    font-weight: 300;
+    background: #002b36;
 }
 
 /* ===== Challenge Picker ===== */
 .challenge-picker {
-    background: white;
-    padding: 20px 40px;
-    border-bottom: 1px solid #e0e0e0;
+    background: #073642;
+    padding: 11.25px 15px; /* Compact padding */
+    border-bottom: 1px solid #268bd2;
     display: flex;
-    gap: 15px;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-direction: column;
+    gap: 7.5px;
+    box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.3);
 }
 
 .challenge-picker label {
     font-weight: 600;
-    color: #333;
-    white-space: nowrap;
+    color: #93a1a1;
+    font-size: 0.8rem;
+    margin-bottom: 3px;
 }
 
 .challenge-count {
-    font-size: 0.85rem;
-    color: #666;
-    padding: 0 10px;
+    font-size: 0.6375rem;
+    color: #586e75;
     white-space: nowrap;
-    border-right: 1px solid #e0e0e0;
 }
 
 .challenge-picker select {
-    flex: 1;
-    max-width: 300px;
-    padding: 10px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 1rem;
-    background: white;
+    width: 100%;
+    padding: 6px 9px;
+    border: 2px solid #268bd2;
+    border-radius: 4.5px;
+    font-size: 0.7rem;
+    background: #002b36;
+    color: #839496;
     cursor: pointer;
     transition: border-color 0.3s ease;
+    margin-bottom: 3px;
 }
 
 .challenge-picker select:hover {
-    border-color: #667eea;
+    border-color: #2aa198;
 }
 
 .challenge-picker select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #2aa198;
+    box-shadow: 0 0 0 2.25px rgba(42, 161, 152, 0.2);
 }
 
 /* ===== Buttons ===== */
 .btn {
-    padding: 10px 20px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 4.5px;
+    font-size: 0.7rem;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
     white-space: nowrap;
+    width: 100%;
+}
+
+.btn-primary {
+    background: #268bd2;
+    color: #fdf6e3;
+    border: 2px solid #268bd2;
+    margin-bottom: 4.5px;
+}
+
+.btn-primary:hover {
+    background: #2aa198;
+    border-color: #2aa198;
 }
 
 .btn-secondary {
-    background: #f0f0f0;
-    color: #333;
-    border: 2px solid #e0e0e0;
+    background: #073642;
+    color: #93a1a1;
+    border: 2px solid #586e75;
 }
 
 .btn-secondary:hover {
-    background: #e0e0e0;
-    border-color: #667eea;
+    background: #002b36;
+    border-color: #268bd2;
 }
 
 .btn-secondary:active {
@@ -132,11 +148,11 @@ body {
 
 /* ===== Editor Section ===== */
 .editor-section {
-    flex: 1;
+    flex: 65;
     display: flex;
     flex-direction: column;
-    background: white;
-    border-right: 1px solid #e0e0e0;
+    background: #002b36;
+    border-right: 1px solid #268bd2;
     min-width: 0;
 }
 
@@ -144,20 +160,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 25px;
-    border-bottom: 1px solid #e0e0e0;
-    background: #fafafa;
+    padding: 15px 18.75px; /* 75% of 20px 25px */
+    border-bottom: 1px solid #268bd2;
+    background: #073642;
 }
 
 .section-header h2 {
-    font-size: 1.3rem;
-    color: #333;
+    font-size: 0.975rem; /* 75% of 1.3rem */
+    color: #93a1a1;
     margin: 0;
 }
 
 .char-count {
-    font-size: 0.9rem;
-    color: #888;
+    font-size: 0.675rem; /* 75% of 0.9rem */
+    color: #586e75;
 }
 
 #code-editor {
@@ -168,16 +184,16 @@ body {
 
 .CodeMirror {
     height: 100% !important;
-    font-size: 15px !important;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+    font-size: 11.25px !important; /* 75% of 15px */
+    font-family: 'Source Code Pro', 'Consolas', 'Monaco', 'Courier New', monospace !important;
 }
 
 /* ===== Preview Section ===== */
 .preview-section {
-    flex: 1;
+    flex: 35;
     display: flex;
     flex-direction: column;
-    background: #f5f5f5;
+    background: #002b36;
     min-width: 0;
     overflow: hidden;
 }
@@ -185,49 +201,52 @@ body {
 .challenge-description {
     flex: 1;
     overflow-y: auto;
-    padding: 25px;
-    background: white;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 18.75px; /* 75% of 25px */
+    background: #073642;
+    border-bottom: 1px solid #268bd2;
 }
 
 .challenge-description h2 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    color: #333;
+    font-size: 0.975rem; /* 75% of 1.3rem */
+    margin-bottom: 11.25px; /* 75% of 15px */
+    color: #93a1a1;
 }
 
 .desc-content h3 {
-    font-size: 1.2rem;
-    margin: 15px 0 10px 0;
-    color: #333;
+    font-size: 0.9rem; /* 75% of 1.2rem */
+    margin: 11.25px 0 7.5px 0; /* 75% of 15px 0 10px 0 */
+    color: #268bd2;
 }
 
 .desc-content p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-    color: #555;
+    margin-bottom: 7.5px; /* 75% of 10px */
+    line-height: 1.4;
+    color: #839496;
+    font-size: 0.75rem;
 }
 
 .difficulty {
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 11.25px; /* 75% of 15px */
+    font-size: 0.75rem;
 }
 
-.difficulty-easy { color: #4caf50; }
-.difficulty-medium { color: #ff9800; }
-.difficulty-hard { color: #f44336; }
+.difficulty-easy { color: #859900; }
+.difficulty-medium { color: #b58900; }
+.difficulty-hard { color: #dc322f; }
 
 .requirements {
-    margin: 15px 0;
-    padding: 15px;
-    background: #f9f9f9;
-    border-left: 4px solid #667eea;
-    border-radius: 4px;
+    margin: 11.25px 0; /* 75% of 15px */
+    padding: 11.25px; /* 75% of 15px */
+    background: #002b36;
+    border-left: 3px solid #268bd2; /* 75% of 4px */
+    border-radius: 3px; /* 75% of 4px */
 }
 
 .requirements h4 {
-    margin-bottom: 10px;
-    color: #333;
+    margin-bottom: 7.5px; /* 75% of 10px */
+    color: #93a1a1;
+    font-size: 0.75rem;
 }
 
 .requirements ul {
@@ -236,47 +255,50 @@ body {
 }
 
 .requirements li {
-    margin-bottom: 8px;
-    padding-left: 25px;
+    margin-bottom: 6px; /* 75% of 8px */
+    padding-left: 18.75px; /* 75% of 25px */
     position: relative;
-    color: #555;
+    color: #839496;
+    font-size: 0.7rem;
 }
 
 .requirements li:before {
     content: '✓';
     position: absolute;
     left: 0;
-    color: #4caf50;
+    color: #859900;
     font-weight: bold;
 }
 
 details {
-    margin-top: 15px;
+    margin-top: 11.25px; /* 75% of 15px */
 }
 
 summary {
     cursor: pointer;
     font-weight: 600;
-    color: #667eea;
-    padding: 10px;
-    margin: -10px;
-    border-radius: 4px;
+    color: #268bd2;
+    padding: 7.5px; /* 75% of 10px */
+    margin: -7.5px; /* 75% of -10px */
+    border-radius: 3px; /* 75% of 4px */
     transition: background 0.2s ease;
+    font-size: 0.75rem;
 }
 
 summary:hover {
-    background: #f0f0f0;
+    background: #002b36;
 }
 
 details ul {
     list-style: none;
-    padding: 10px 0 0 25px;
-    margin-top: 10px;
+    padding: 7.5px 0 0 18.75px; /* 75% of 10px 0 0 25px */
+    margin-top: 7.5px; /* 75% of 10px */
 }
 
 details li {
-    margin-bottom: 8px;
-    color: #666;
+    margin-bottom: 6px; /* 75% of 8px */
+    color: #586e75;
+    font-size: 0.7rem;
 }
 
 /* ===== Feedback Section ===== */
@@ -284,141 +306,145 @@ details li {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: white;
-    border-top: 1px solid #e0e0e0;
+    background: #073642;
+    border-top: 1px solid #268bd2;
     overflow: hidden;
 }
 
 .feedback-section h2 {
-    font-size: 1.3rem;
-    padding: 15px 25px;
+    font-size: 0.975rem; /* 75% of 1.3rem */
+    padding: 11.25px 18.75px; /* 75% of 15px 25px */
     margin: 0;
-    border-bottom: 1px solid #e0e0e0;
-    color: #333;
+    border-bottom: 1px solid #268bd2;
+    color: #93a1a1;
 }
 
 .feedback-content {
     flex: 1;
-    padding: 20px 25px;
+    padding: 15px 18.75px; /* 75% of 20px 25px */
     overflow-y: auto;
 }
 
 .feedback-status {
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    padding: 11.25px; /* 75% of 15px */
+    border-radius: 4.5px; /* 75% of 6px */
+    margin-bottom: 11.25px; /* 75% of 15px */
     font-weight: 600;
     text-align: center;
+    font-size: 0.75rem;
 }
 
 .feedback-status.success {
-    background: #e8f5e9;
-    color: #2e7d32;
-    border-left: 4px solid #4caf50;
+    background: rgba(133, 153, 0, 0.2);
+    color: #859900;
+    border-left: 3px solid #859900; /* 75% of 4px */
 }
 
 .feedback-status.partial {
-    background: #fff3e0;
-    color: #e65100;
-    border-left: 4px solid #ff9800;
+    background: rgba(181, 137, 0, 0.2);
+    color: #b58900;
+    border-left: 3px solid #b58900; /* 75% of 4px */
 }
 
 .test-result {
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border-left: 4px solid transparent;
+    padding: 9px 11.25px; /* 75% of 12px 15px */
+    margin-bottom: 7.5px; /* 75% of 10px */
+    border-radius: 4.5px; /* 75% of 6px */
+    border-left: 3px solid transparent; /* 75% of 4px */
     transition: all 0.2s ease;
+    font-size: 0.7rem;
 }
 
 .test-result.success {
-    background: #e8f5e9;
-    border-left-color: #4caf50;
+    background: rgba(133, 153, 0, 0.15);
+    border-left-color: #859900;
 }
 
 .test-result.failure {
-    background: #ffebee;
-    border-left-color: #f44336;
+    background: rgba(220, 50, 47, 0.15);
+    border-left-color: #dc322f;
 }
 
 .test-icon {
     font-weight: bold;
-    margin-right: 10px;
-    font-size: 1.1rem;
+    margin-right: 7.5px; /* 75% of 10px */
+    font-size: 0.825rem; /* 75% of 1.1rem */
 }
 
-.test-result.success .test-icon { color: #4caf50; }
-.test-result.failure .test-icon { color: #f44336; }
+.test-result.success .test-icon { color: #859900; }
+.test-result.failure .test-icon { color: #dc322f; }
 
 .test-name {
     font-weight: 600;
-    color: #333;
-    font-family: 'Monaco', 'Menlo', monospace;
+    color: #93a1a1;
+    font-family: 'Source Code Pro', 'Consolas', 'Monaco', monospace;
+    font-size: 0.7rem;
 }
 
 .test-message {
-    margin: 8px 0 0 0;
-    font-size: 0.9rem;
-    color: #666;
+    margin: 6px 0 0 0; /* 75% of 8px */
+    font-size: 0.675rem; /* 75% of 0.9rem */
+    color: #586e75;
 }
 
 .celebration {
     text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 6px;
-    font-size: 1.2rem;
+    padding: 15px; /* 75% of 20px */
+    background: #268bd2;
+    color: #fdf6e3;
+    border-radius: 4.5px; /* 75% of 6px */
+    font-size: 0.9rem; /* 75% of 1.2rem */
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 11.25px; /* 75% of 15px */
     animation: bounce 0.6s ease;
 }
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-7.5px); } /* 75% of -10px */
 }
 
 .feedback-content > p {
-    padding: 10px 15px;
-    border-radius: 6px;
+    padding: 7.5px 11.25px; /* 75% of 10px 15px */
+    border-radius: 4.5px; /* 75% of 6px */
+    font-size: 0.7rem;
 }
 
 .feedback-content .info {
-    background: #e3f2fd;
-    color: #1565c0;
-    border-left: 4px solid #2196f3;
+    background: rgba(38, 139, 210, 0.15);
+    color: #268bd2;
+    border-left: 3px solid #268bd2; /* 75% of 4px */
 }
 
 .feedback-content .error {
-    background: #ffebee;
-    color: #c62828;
-    border-left: 4px solid #f44336;
+    background: rgba(220, 50, 47, 0.15);
+    color: #dc322f;
+    border-left: 3px solid #dc322f; /* 75% of 4px */
 }
 
 .feedback-content .success {
-    background: #e8f5e9;
-    color: #2e7d32;
-    border-left: 4px solid #4caf50;
+    background: rgba(133, 153, 0, 0.15);
+    color: #859900;
+    border-left: 3px solid #859900; /* 75% of 4px */
 }
 
 /* ===== Scrollbar Styling ===== */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px; /* 75% of 8px */
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #002b36;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
+    background: #586e75;
+    border-radius: 3px; /* 75% of 4px */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #999;
+    background: #268bd2;
 }
 
 /* ===== Responsive Design ===== */
@@ -430,39 +456,37 @@ details li {
     .editor-section {
         flex: 1;
         border-right: none;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #268bd2;
     }
 
     .preview-section {
         flex: 1;
-        min-height: 500px;
+        min-height: 375px; /* 75% of 500px */
     }
 }
 
 @media (max-width: 768px) {
     .header h1 {
-        font-size: 1.8rem;
+        font-size: 1.35rem; /* 75% of 1.8rem */
     }
 
     .challenge-picker {
         flex-wrap: wrap;
-        padding: 15px 20px;
+        padding: 11.25px 15px; /* 75% of 15px 20px */
     }
 
     .section-header {
         flex-wrap: wrap;
-        padding: 15px 20px;
+        padding: 11.25px 15px; /* 75% of 15px 20px */
     }
 
     .challenge-description,
-    .live-preview,
     .feedback-section {
-        padding: 15px;
+        padding: 11.25px; /* 75% of 15px */
     }
 
     .challenge-description h2,
-    .live-preview h2,
     .feedback-section h2 {
-        padding: 10px 15px;
+        padding: 7.5px 11.25px; /* 75% of 10px 15px */
     }
 }

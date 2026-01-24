@@ -7,33 +7,16 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/solarized.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>Introduction of Creative Coding / Design Challenge</h1>
-            <p class="subtitle">Learn JavaScript by solving design challenges</p>
-        </header>
-
-        <!-- Challenge Picker -->
-        <div class="challenge-picker">
-            <label for="challenge-select">Select a Challenge:</label>
-            <select id="challenge-select">
-                <option value="">-- Choose a challenge --</option>
-            </select>
-            <span id="challenge-count" class="challenge-count"></span>
-            <button id="run-btn" class="btn btn-primary">Run Code</button>
-            <button id="reset-btn" class="btn btn-secondary">Reset Code</button>
-        </div>
-
         <!-- Main Content -->
         <div class="main-content">
             <!-- Left: Code Editor -->
             <div class="editor-section">
                 <div class="section-header">
-                    <h2>Code Editor</h2>
+                    <h2>Introduction of Creative Coding / Coding Challenges </h2>
                     <span id="char-count" class="char-count">0 characters</span>
                 </div>
                 <div id="code-editor"></div>
@@ -41,6 +24,17 @@
 
             <!-- Right: Preview & Feedback -->
             <div class="preview-section">
+                <!-- Challenge Picker -->
+                <div class="challenge-picker">
+                    <label for="challenge-select">Select a Challenge:</label>
+                    <select id="challenge-select">
+                        <option value="">-- Choose a challenge --</option>
+                    </select>
+                    <span id="challenge-count" class="challenge-count"></span>
+                    <button id="run-btn" class="btn btn-primary">Run Code</button>
+                    <button id="reset-btn" class="btn btn-secondary">Reset Code</button>
+                </div>
+
                 <!-- Challenge Description -->
                 <div class="challenge-description">
                     <h2>Challenge Details</h2>

@@ -10,7 +10,7 @@ const Editor = (() => {
         // Initialize CodeMirror editor
         editor = CodeMirror(document.getElementById('code-editor'), {
             lineNumbers: true,
-            theme: 'dracula',
+            theme: 'solarized dark',
             mode: 'javascript',
             indentUnit: 2,
             indentWithTabs: false,
