@@ -17,6 +17,9 @@ const App = (() => {
         // Setup event listeners
         setupEventListeners();
 
+        // Check URL parameter for auto-opening a challenge
+        checkUrlParam();
+
         // Focus on editor
         Editor.focus();
     };
@@ -126,13 +129,73 @@ const App = (() => {
 
         // Reset button
         document.getElementById('reset-btn').addEventListener('click', resetChallenge);
+
+        // Browser navigation (Back / Forward)
+        window.addEventListener('popstate', () => {
+            const challengeId = getChallengeIdFromUrl();
+            if (challengeId && challenges[challengeId]) {
+                loadChallenge(challengeId, false);
+            }
+        });
     };
 
-    const loadChallenge = (challengeId) => {
+    const getChallengeIdFromUrl = () => {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawParam = urlParams.get('challenge') || urlParams.get('id') || urlParams.get('c') || window.location.hash.replace(/^#/, '');
+
+            if (!rawParam) return null;
+
+            const param = rawParam.trim();
+            const lowerParam = param.toLowerCase();
+
+            // 1. Exact match with loaded challenges
+            if (challenges[param]) return param;
+            if (challenges[lowerParam]) return lowerParam;
+
+            // 2. Numeric index match (e.g., ?challenge=1 -> first challenge)
+            const num = parseInt(lowerParam, 10);
+            if (!isNaN(num) && num >= 1 && num <= challengeOrder.length) {
+                const idFromIndex = challengeOrder[num - 1];
+                if (challenges[idFromIndex]) return idFromIndex;
+            }
+
+            // 3. Match by slug without "oop-" prefix (e.g. ?challenge=encapsulation)
+            const matchBySlug = challengeOrder.find(id => {
+                const lowerId = id.toLowerCase();
+                return lowerId === lowerParam ||
+                       lowerId === `oop-${lowerParam}` ||
+                       lowerId.replace(/^oop-/, '') === lowerParam;
+            });
+
+            if (matchBySlug && challenges[matchBySlug]) return matchBySlug;
+
+            return null;
+        } catch (e) {
+            console.warn('Error reading challenge from URL:', e);
+            return null;
+        }
+    };
+
+    const checkUrlParam = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawParam = urlParams.get('challenge') || urlParams.get('id') || urlParams.get('c') || window.location.hash.replace(/^#/, '');
+
+        if (!rawParam) return;
+
+        const challengeId = getChallengeIdFromUrl();
+        if (challengeId) {
+            loadChallenge(challengeId, false);
+        } else {
+            showMessage(`Challenge "${rawParam.trim()}" not found. Please choose a challenge from the dropdown.`, 'error');
+        }
+    };
+
+    const loadChallenge = (challengeId, updateUrl = true) => {
         currentChallenge = challenges[challengeId];
         
         if (!currentChallenge) {
-            showMessage('Challenge not found. Please try again.', 'error');
+            showMessage(`Challenge "${challengeId}" not found. Please try again.`, 'error');
             return;
         }
         
@@ -140,6 +203,27 @@ const App = (() => {
         if (!currentChallenge.title || !currentChallenge.description) {
             showMessage('Challenge is missing required fields (title/description).', 'error');
             return;
+        }
+
+        // Keep dropdown select element in sync
+        const select = document.getElementById('challenge-select');
+        if (select && select.value !== challengeId) {
+            select.value = challengeId;
+        }
+
+        // Update URL query param so it can be shared or bookmarked
+        if (updateUrl && window.history && window.history.replaceState) {
+            try {
+                const url = new URL(window.location.href);
+                if (url.searchParams.get('challenge') !== challengeId) {
+                    url.searchParams.set('challenge', challengeId);
+                    url.searchParams.delete('id');
+                    url.searchParams.delete('c');
+                    window.history.replaceState({}, '', url.toString());
+                }
+            } catch (e) {
+                console.warn('Could not update URL parameter:', e);
+            }
         }
 
         // Update challenge description
