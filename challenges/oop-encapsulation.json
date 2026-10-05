@@ -1,0 +1,66 @@
+{
+  "id": "oop-encapsulation",
+  "title": "Coding Challenge 3: Encapsulation",
+  "difficulty": "Medium",
+  "description": "Learn the principle of Encapsulation in Object-Oriented Programming. Encapsulation bundles data and methods together while hiding internal details and restricting direct access from outside components. In this challenge, create a SecretDiary class that protects a child's secrets from snooping parents! Use private class fields (with the '#' syntax) so that passcode and diary contents cannot be accessed directly, and can only be written or read by supplying the correct passcode.",
+  "starterCode": "// Create a SecretDiary class demonstrating Encapsulation\n// The class should have:\n// - A constructor that accepts (owner, passcode)\n// - A public 'owner' property\n// - Private fields for #passcode and #content (initialized to '')\n// - write(passcode, text) method: updates #content and returns 'Entry added' if passcode matches, otherwise returns 'Access denied'\n// - read(passcode) method: returns #content if passcode matches, otherwise returns 'Access denied'\n\n// TODO: Write your code here",
+  "requirements": [
+    "Create a class named 'SecretDiary'",
+    "The constructor should accept 'owner' and 'passcode' parameters",
+    "Store 'owner' as a public property",
+    "Use private class fields (#passcode and #content) to encapsulate private data",
+    "Implement a 'write(passcode, text)' method that updates #content and returns 'Entry added' if the passcode is correct, or returns 'Access denied' if incorrect",
+    "Implement a 'read(passcode)' method that returns #content if the passcode is correct, or returns 'Access denied' if incorrect"
+  ],
+  "hints": [
+    "Declare private fields at the top of the class body using the '#' prefix: #passcode; and #content = '';",
+    "Inside the constructor and methods, refer to private fields using 'this.#passcode' and 'this.#content'",
+    "Private fields cannot be accessed outside the class: diary.passcode and diary.content will be undefined",
+    "Compare the incoming passcode parameter with this.#passcode before allowing access",
+    "Return 'Access denied' when an incorrect passcode is provided"
+  ],
+  "tests": [
+    {
+      "name": "SecretDiary class exists",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('Alice', '1234'); return typeof d === 'object' ? { success: true } : { success: false, message: 'SecretDiary is not a class' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "SecretDiary class created successfully ✓"
+    },
+    {
+      "name": "SecretDiary has public owner property",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('Alice', '1234'); return d.owner === 'Alice' ? { success: true } : { success: false, message: 'owner property is not set correctly' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Public owner property works correctly ✓"
+    },
+    {
+      "name": "Sensitive fields are encapsulated (not public properties)",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('Bob', 'secret123'); if (d.passcode !== undefined) { return { success: false, message: 'passcode is exposed as a public property! Use a private field (#passcode)' }; } if (d.content !== undefined) { return { success: false, message: 'content is exposed as a public property! Use a private field (#content)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Private fields successfully encapsulated ✓"
+    },
+    {
+      "name": "write() updates content with valid passcode",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('Charlie', 'mySecretCode'); const writeRes = d.write('mySecretCode', 'Dear Diary, today was great!'); const readRes = d.read('mySecretCode'); return (writeRes === 'Entry added' && readRes === 'Dear Diary, today was great!') ? { success: true } : { success: false, message: 'write() or read() failed with valid passcode. Expected write to return \"Entry added\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "write() updates content correctly ✓"
+    },
+    {
+      "name": "read() denies access with incorrect passcode",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('David', 'key999'); d.write('key999', 'Top secret thoughts'); const readRes = d.read('wrongPasscode'); return readRes === 'Access denied' ? { success: true } : { success: false, message: 'Expected \"Access denied\", got \"' + readRes + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Unauthorized read access blocked (Access denied) ✓"
+    },
+    {
+      "name": "write() denies update with incorrect passcode",
+      "functionName": "null",
+      "test": "function() { try { const d = new SecretDiary('Emma', 'pass123'); d.write('pass123', 'My secret'); const writeRes = d.write('parentSnooping', 'I found your diary!'); const readRes = d.read('pass123'); if (writeRes !== 'Access denied') { return { success: false, message: 'write() should return \"Access denied\" for incorrect passcode' }; } if (readRes !== 'My secret') { return { success: false, message: 'Diary content should not be changed by unauthorized access' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Unauthorized write access blocked ✓"
+    },
+    {
+      "name": "Uses private fields (#) for data encapsulation",
+      "functionName": "null",
+      "test": "function() { try { const codeStr = SecretDiary.toString(); if (!codeStr.includes('#')) { return { success: false, message: 'SecretDiary must use private class fields (#) for encapsulation' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Modern JavaScript private class fields used ✓"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "oop-polymorphism",
+  "title": "Coding Challenge 4: Polymorphism",
+  "difficulty": "Medium",
+  "description": "Learn the principle of Polymorphism in Object-Oriented Programming. Polymorphism allows different classes to define methods with the same name, enabling code to interact with them through a shared interface while each responds in its own way. Create a Superhero base class and subclasses (FlyingHero and SpeedHero) that each implement usePower() differently, along with an activatePowers() function that triggers powers across a superhero team.",
+  "starterCode": "// Create a Superhero base class and subclasses demonstrating Polymorphism\n// 1. Superhero base class:\n//    - constructor(name)\n//    - usePower() method that returns '[name] uses a superpower!'\n// 2. FlyingHero class extending Superhero:\n//    - overrides usePower() to return '[name] flies through the skies!'\n// 3. SpeedHero class extending Superhero:\n//    - overrides usePower() to return '[name] runs at supersonic speed!'\n// 4. activatePowers(heroes) function:\n//    - takes an array of superhero instances\n//    - calls usePower() on each hero and returns an array of the results\n\n// TODO: Write your code here",
+  "requirements": [
+    "Create a base class named 'Superhero' with a constructor accepting 'name'",
+    "Implement a 'usePower()' method on Superhero returning '[name] uses a superpower!'",
+    "Create a 'FlyingHero' class that extends Superhero and overrides 'usePower()' to return '[name] flies through the skies!'",
+    "Create a 'SpeedHero' class that extends Superhero and overrides 'usePower()' to return '[name] runs at supersonic speed!'",
+    "Create an 'activatePowers(heroes)' function that takes an array of heroes, calls usePower() on each polymorphically, and returns an array of the results"
+  ],
+  "hints": [
+    "Use 'class FlyingHero extends Superhero' to inherit from Superhero",
+    "Subclasses inherit constructor(name) automatically if they don't declare their own constructor",
+    "Override a parent method simply by declaring usePower() in the subclass",
+    "activatePowers(heroes) can use heroes.map(hero => hero.usePower())",
+    "Polymorphism means activatePowers works for any Superhero subtype without checking its specific class type"
+  ],
+  "tests": [
+    {
+      "name": "Superhero base class exists with name property",
+      "functionName": "null",
+      "test": "function() { try { const hero = new Superhero('Mystic'); return (typeof hero === 'object' && hero.name === 'Mystic') ? { success: true } : { success: false, message: 'Superhero class missing or name property not set' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Superhero base class created successfully ✓"
+    },
+    {
+      "name": "Superhero has usePower() method",
+      "functionName": "null",
+      "test": "function() { try { const hero = new Superhero('Mystic'); const res = hero.usePower(); return res === 'Mystic uses a superpower!' ? { success: true } : { success: false, message: 'Expected \"Mystic uses a superpower!\", got \"' + res + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Superhero usePower() works correctly ✓"
+    },
+    {
+      "name": "FlyingHero extends Superhero and overrides usePower()",
+      "functionName": "null",
+      "test": "function() { try { const fly = new FlyingHero('Skyhawk'); if (!(fly instanceof Superhero)) { return { success: false, message: 'FlyingHero must extend Superhero' }; } const res = fly.usePower(); return res === 'Skyhawk flies through the skies!' ? { success: true } : { success: false, message: 'Expected \"Skyhawk flies through the skies!\", got \"' + res + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "FlyingHero correctly overrides usePower() ✓"
+    },
+    {
+      "name": "SpeedHero extends Superhero and overrides usePower()",
+      "functionName": "null",
+      "test": "function() { try { const speed = new SpeedHero('Bolt'); if (!(speed instanceof Superhero)) { return { success: false, message: 'SpeedHero must extend Superhero' }; } const res = speed.usePower(); return res === 'Bolt runs at supersonic speed!' ? { success: true } : { success: false, message: 'Expected \"Bolt runs at supersonic speed!\", got \"' + res + '\"' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "SpeedHero correctly overrides usePower() ✓"
+    },
+    {
+      "name": "activatePowers() polymorphically executes usePower() across heroes",
+      "functionName": "null",
+      "test": "function() { try { if (typeof activatePowers !== 'function') { return { success: false, message: 'activatePowers function does not exist' }; } const team = [new FlyingHero('Aero'), new SpeedHero('Flash'), new Superhero('Citizen')]; const results = activatePowers(team); const expected = ['Aero flies through the skies!', 'Flash runs at supersonic speed!', 'Citizen uses a superpower!']; if (!Array.isArray(results) || results.length !== 3) { return { success: false, message: 'activatePowers should return an array with 3 power messages' }; } const matches = results.every((msg, idx) => msg === expected[idx]); return matches ? { success: true } : { success: false, message: 'Expected ' + JSON.stringify(expected) + ', got ' + JSON.stringify(results) }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "activatePowers executes powers polymorphically ✓"
+    },
+    {
+      "name": "Subclasses respond differently to the same interface",
+      "functionName": "null",
+      "test": "function() { try { const h1 = new FlyingHero('Valkyrie'); const h2 = new SpeedHero('Velocity'); const team = [h1, h2]; const outputs = team.map(h => h.usePower()); return (outputs[0] === 'Valkyrie flies through the skies!' && outputs[1] === 'Velocity runs at supersonic speed!') ? { success: true } : { success: false, message: 'Different subclasses failed to provide polymorphic responses' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Polymorphism verified across multiple subclasses ✓"
+    }
+  ]
+}

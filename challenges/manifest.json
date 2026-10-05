@@ -1,6 +1,8 @@
 {
   "challenges": [
     "oop-abstraction",
-    "oop-inheritance"
+    "oop-inheritance",
+    "oop-encapsulation",
+    "oop-polymorphism"
   ]
 }

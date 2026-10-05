@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Simple server launcher for the Design Challenge Editor
+# Simple server launcher for the Coding Challenges Editor
 # This script starts a local HTTP server for better performance
 
 PORT=8000
 
-echo "Starting Design Challenge Editor..."
+echo "Starting Coding Challenges Editor..."
 echo ""
 echo "Server will be available at: http://localhost:$PORT"
 echo ""

@@ -1,8 +1,8 @@
 {
   "id": "oop-abstraction",
-  "title": "Week 13 - Coding Challenge 1",
+  "title": "Coding Challenge 1: Abstraction",
   "difficulty": "Easy",
-  "description": "Learn the principle of Abstraction in Object-Oriented Programming. Create a Human class that encapsulates the essential properties and behaviors. Your class should have a 'name' property and a 'run()' method that returns a message.",
+  "description": "Learn the principle of Abstraction in Object-Oriented Programming. Abstraction focuses on exposing essential qualities while hiding internal complexity. Create a Human class that models a person with essential properties and behaviors: a 'name' property and a 'run()' method that returns a message.",
   "starterCode": "// Create a Human class with abstraction\n// The class should have:\n// - A constructor that takes 'name' as parameter\n// - A 'name' property\n// - A run() method that returns a message\n\n// TODO: Write your code here",
   "requirements": [
     "Create a class named 'Human'",

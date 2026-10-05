@@ -1,8 +1,8 @@
 {
   "id": "oop-inheritance",
-  "title": "Week 13 - Coding Challenge 2",
+  "title": "Coding Challenge 2: Inheritance",
   "difficulty": "Medium",
-  "description": "Learn the principle of Inheritance in Object-Oriented Programming. Create an 'Animal' base class with a 'run()' method. Then create a 'Human' class that extends Animal, adding a 'name' property and overriding the run() method to return a specific message.",
+  "description": "Learn the principle of Inheritance in Object-Oriented Programming. Inheritance allows a child class to inherit properties and methods from a parent class. Create an 'Animal' base class with a 'run()' method. Then create a 'Human' class that extends Animal, adding a 'name' property and overriding the run() method to return a specific message.",
   "starterCode": "// Create an Animal base class with a run() method\n// Create a Human class that extends Animal\n// Human should have a constructor that accepts 'name'\n// Human should override the run() method\n\n// TODO: Write your code here",
   "requirements": [
     "Create an 'Animal' base class with a 'run()' method",

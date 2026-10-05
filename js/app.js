@@ -5,6 +5,7 @@
 const App = (() => {
     let challenges = {};
     let currentChallenge = null;
+    let challengeOrder = [];
 
     const init = async () => {
         // Initialize editor
@@ -34,9 +35,13 @@ const App = (() => {
                 console.warn('manifest.json not found, using default challenge list');
                 challengeIds = [
                     'oop-abstraction',
-                    'oop-inheritance'
+                    'oop-inheritance',
+                    'oop-encapsulation',
+                    'oop-polymorphism'
                 ];
             }
+
+            challengeOrder = challengeIds;
 
             // Load each challenge
             let successCount = 0;
@@ -75,8 +80,10 @@ const App = (() => {
             select.remove(1);
         }
         
-        // Get sorted challenge IDs
-        const challengeIds = Object.keys(challenges).sort();
+        // Get challenge IDs in manifest order (falling back to sorted keys if order not set)
+        const challengeIds = challengeOrder.length > 0
+            ? challengeOrder.filter(id => challenges[id])
+            : Object.keys(challenges).sort();
         
         if (challengeIds.length === 0) {
             select.innerHTML = '<option value="">-- No challenges available --</option>';
