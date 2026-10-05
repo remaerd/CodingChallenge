@@ -2,22 +2,22 @@
   "id": "oop-encapsulation",
   "title": "Coding Challenge 3: Encapsulation",
   "difficulty": "Medium",
-  "description": "Learn the principle of Encapsulation in Object-Oriented Programming. Encapsulation bundles data and methods together while hiding internal details and restricting direct access from outside components. In this challenge, create a SecretDiary class that protects a child's secrets from snooping parents! Use private class fields (with the '#' syntax) so that passcode and diary contents cannot be accessed directly, and can only be written or read by supplying the correct passcode.",
-  "starterCode": "// Create a SecretDiary class demonstrating Encapsulation\n// The class should have:\n// - A constructor that accepts (owner, passcode)\n// - A public 'owner' property\n// - Private fields for #passcode and #content (initialized to '')\n// - write(passcode, text) method: updates #content and returns 'Entry added' if passcode matches, otherwise returns 'Access denied'\n// - read(passcode) method: returns #content if passcode matches, otherwise returns 'Access denied'\n\n// TODO: Write your code here",
+  "description": "Learn the principle of Encapsulation in Object-Oriented Programming. Encapsulation bundles data and methods together while protecting internal state from direct external access. In this challenge, create a SecretDiary class that protects a child's secrets from snooping parents! Use the underscore naming convention (_passcode and _content) for private variables to signify that internal data should not be accessed directly, but only read or written through class methods using the correct passcode.",
+  "starterCode": "// Create a SecretDiary class demonstrating Encapsulation\n// The class should have:\n// - A constructor that accepts (owner, passcode)\n// - A public 'owner' property\n// - Private variables using underscore naming: _passcode and _content (initialized to '')\n// - write(passcode, text) method: updates _content and returns 'Entry added' if passcode matches, otherwise returns 'Access denied'\n// - read(passcode) method: returns _content if passcode matches, otherwise returns 'Access denied'\n\n// TODO: Write your code here",
   "requirements": [
     "Create a class named 'SecretDiary'",
     "The constructor should accept 'owner' and 'passcode' parameters",
-    "Store 'owner' as a public property",
-    "Use private class fields (#passcode and #content) to encapsulate private data",
-    "Implement a 'write(passcode, text)' method that updates #content and returns 'Entry added' if the passcode is correct, or returns 'Access denied' if incorrect",
-    "Implement a 'read(passcode)' method that returns #content if the passcode is correct, or returns 'Access denied' if incorrect"
+    "Store 'owner' as a public property ('this.owner')",
+    "Use the underscore prefix convention ('this._passcode' and 'this._content') for private variables",
+    "Implement a 'write(passcode, text)' method that updates _content and returns 'Entry added' if the passcode is correct, or returns 'Access denied' if incorrect",
+    "Implement a 'read(passcode)' method that returns _content if the passcode is correct, or returns 'Access denied' if incorrect"
   ],
   "hints": [
-    "Declare private fields at the top of the class body using the '#' prefix: #passcode; and #content = '';",
-    "Inside the constructor and methods, refer to private fields using 'this.#passcode' and 'this.#content'",
-    "Private fields cannot be accessed outside the class: diary.passcode and diary.content will be undefined",
-    "Compare the incoming passcode parameter with this.#passcode before allowing access",
-    "Return 'Access denied' when an incorrect passcode is provided"
+    "In JavaScript, prefixing variable names with an underscore (like this._passcode and this._content) is the standard convention to indicate private properties",
+    "Initialize this.owner = owner, this._passcode = passcode, and this._content = '' inside the constructor",
+    "In write() and read(), verify if the incoming passcode parameter matches this._passcode",
+    "If the passcode matches, allow reading or updating this._content",
+    "Return 'Access denied' when an incorrect passcode is supplied"
   ],
   "tests": [
     {
@@ -33,10 +33,10 @@
       "successMessage": "Public owner property works correctly ✓"
     },
     {
-      "name": "Sensitive fields are encapsulated (not public properties)",
+      "name": "Uses underscore naming convention for private variables",
       "functionName": "null",
-      "test": "function() { try { const d = new SecretDiary('Bob', 'secret123'); if (d.passcode !== undefined) { return { success: false, message: 'passcode is exposed as a public property! Use a private field (#passcode)' }; } if (d.content !== undefined) { return { success: false, message: 'content is exposed as a public property! Use a private field (#content)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
-      "successMessage": "Private fields successfully encapsulated ✓"
+      "test": "function() { try { const d = new SecretDiary('Bob', 'secret123'); const codeStr = SecretDiary.toString(); const hasUnderscore = codeStr.includes('_passcode') || codeStr.includes('_content') || ('_passcode' in d); if (!hasUnderscore) { return { success: false, message: 'Please use the underscore convention (this._passcode and this._content) for private variables' }; } if (d.passcode !== undefined) { return { success: false, message: 'passcode should use underscore prefix (this._passcode)' }; } if (d.content !== undefined) { return { success: false, message: 'content should use underscore prefix (this._content)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Underscore convention used for private variables ✓"
     },
     {
       "name": "write() updates content with valid passcode",
@@ -57,10 +57,10 @@
       "successMessage": "Unauthorized write access blocked ✓"
     },
     {
-      "name": "Uses private fields (#) for data encapsulation",
+      "name": "Encapsulation: methods control access to internal state",
       "functionName": "null",
-      "test": "function() { try { const codeStr = SecretDiary.toString(); if (!codeStr.includes('#')) { return { success: false, message: 'SecretDiary must use private class fields (#) for encapsulation' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
-      "successMessage": "Modern JavaScript private class fields used ✓"
+      "test": "function() { try { const d1 = new SecretDiary('Fiona', 'codeA'); const d2 = new SecretDiary('George', 'codeB'); d1.write('codeA', 'Fiona secret'); d2.write('codeB', 'George secret'); return (d1.read('codeA') === 'Fiona secret' && d2.read('codeB') === 'George secret' && d1.read('codeB') === 'Access denied') ? { success: true } : { success: false, message: 'Encapsulated state not maintained independently per instance' }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "Encapsulation preserves private state across instances ✓"
     }
   ]
 }

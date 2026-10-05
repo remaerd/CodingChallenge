@@ -316,11 +316,32 @@ const App = (() => {
             `).join('')}
             ${allPassed ? '<div class="celebration">🎉 Challenge completed!</div>' : ''}
         `;
+
+        if (allPassed) {
+            triggerSuccessCelebration();
+        }
+    };
+
+    const triggerSuccessCelebration = () => {
+        // Shaking the web browser a bit
+        const container = document.querySelector('.container') || document.body;
+        container.classList.remove('screen-shake');
+        void container.offsetWidth; // Force DOM reflow to retrigger CSS animation
+        container.classList.add('screen-shake');
+
+        setTimeout(() => {
+            container.classList.remove('screen-shake');
+        }, 600);
+
+        // Pop up confettis on the screen
+        if (window.Confetti && typeof window.Confetti.pop === 'function') {
+            window.Confetti.pop();
+        }
     };
 
     const clearFeedback = () => {
         const feedbackDiv = document.getElementById('feedback');
-        feedbackDiv.innerHTML = '<p class="info">Write code and tests will run automatically</p>';
+        feedbackDiv.innerHTML = '<p class="info">Click "Run Code" to test your solution</p>';
     };
 
     const showMessage = (message, type = 'info') => {

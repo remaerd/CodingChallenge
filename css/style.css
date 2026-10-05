@@ -34,6 +34,7 @@ html, body {
     background: #002b36;
     color: #839496;
     font-size: 12pt; /* 75% of 16px */
+    overflow-x: hidden;
 }
 
 body {
@@ -390,18 +391,43 @@ details li {
 .celebration {
     text-align: center;
     padding: 15px; /* 75% of 20px */
-    background: #268bd2;
+    background: linear-gradient(135deg, #268bd2, #2aa198);
     color: #fdf6e3;
     border-radius: 4.5px; /* 75% of 6px */
     font-size: 0.9rem; /* 75% of 1.2rem */
     font-weight: bold;
     margin-top: 11.25px; /* 75% of 15px */
-    animation: bounce 0.6s ease;
+    animation: bounce 0.6s ease, celebration-glow 1.5s infinite alternate ease-in-out;
+    box-shadow: 0 4px 15px rgba(38, 139, 210, 0.4);
 }
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-7.5px); } /* 75% of -10px */
+}
+
+@keyframes celebration-glow {
+    0% { box-shadow: 0 4px 15px rgba(38, 139, 210, 0.4); }
+    100% { box-shadow: 0 4px 25px rgba(42, 161, 152, 0.7); }
+}
+
+/* ===== Screen Shake Animation ===== */
+@keyframes screen-shake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-6px, -3px) rotate(-0.6deg); }
+    20% { transform: translate(5px, 3px) rotate(0.6deg); }
+    30% { transform: translate(-5px, 2px) rotate(-0.4deg); }
+    40% { transform: translate(4px, -2px) rotate(0.4deg); }
+    50% { transform: translate(-3px, -1px) rotate(-0.2deg); }
+    60% { transform: translate(3px, 1px) rotate(0.2deg); }
+    70% { transform: translate(-2px, 1px) rotate(-0.1deg); }
+    80% { transform: translate(1px, -1px) rotate(0.1deg); }
+    90% { transform: translate(-0.5px, 0.5px) rotate(0deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.screen-shake {
+    animation: screen-shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .feedback-content > p {
