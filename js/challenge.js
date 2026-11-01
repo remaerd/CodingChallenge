@@ -3,7 +3,9 @@
  */
 
 const ChallengeSystem = (() => {
-    const runTests = (code, challenge) => {
+    const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+
+    const runTests = async (code, challenge) => {
         if (!challenge || !challenge.tests) {
             return {
                 passed: 0,
@@ -16,15 +18,22 @@ const ChallengeSystem = (() => {
         const results = [];
         let passed = 0;
 
-        challenge.tests.forEach((test, index) => {
+        for (const test of challenge.tests) {
+            let timerId = null;
             try {
                 // Execute user code and test in the same scope
                 // The test function definition is in the test.test string
-                const combinedCode = code + `\nconst __testFn = ${test.test};\n__testFn();`;
-                const testExecutor = new Function(combinedCode + `\nreturn __testFn();`);
-                const result = testExecutor();
+                const combinedCode = code + `\nconst __testFn = ${test.test};\nreturn await __testFn();`;
+                const testExecutor = new AsyncFunction(combinedCode);
+
+                const timeoutPromise = new Promise((_, reject) => {
+                    timerId = setTimeout(() => reject(new Error('Test timed out after 8 seconds')), 8000);
+                });
+
+                const result = await Promise.race([testExecutor(), timeoutPromise]);
+                if (timerId) clearTimeout(timerId);
                 
-                if (result.success) {
+                if (result && result.success) {
                     passed++;
                     results.push({
                         name: test.name,
@@ -35,17 +44,18 @@ const ChallengeSystem = (() => {
                     results.push({
                         name: test.name,
                         success: false,
-                        message: result.message || 'Test failed ✗'
+                        message: (result && result.message) || 'Test failed ✗'
                     });
                 }
             } catch (error) {
+                if (timerId) clearTimeout(timerId);
                 results.push({
                     name: test.name,
                     success: false,
                     message: `Error: ${error.message}`
                 });
             }
-        });
+        }
 
         return {
             passed,
@@ -58,7 +68,7 @@ const ChallengeSystem = (() => {
     const validateSyntax = (code) => {
         try {
             // Try to compile the code
-            new Function(code);
+            new AsyncFunction(code);
             return { valid: true, error: null };
         } catch (error) {
             return { valid: false, error: error.message };

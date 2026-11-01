@@ -1,0 +1,60 @@
+{
+  "id": "websocket-echo",
+  "title": "Coding Challenge 6: WebSocket Connection",
+  "difficulty": "Medium",
+  "description": "Learn how to establish real-time, bidirectional communication using the native browser WebSocket API. Unlike HTTP requests which follow a single request-response cycle and close, a WebSocket creates a persistent connection where client and server can send messages to each other at any time.\n\nIn this challenge, you will connect to the public WebSocket echo service ('wss://echo.websocket.org'). The echo server reflects back any text message it receives.\n\nYou will build a 'WebSocketClient' class and a 'sendEchoMessage' helper function:\n1. WebSocketClient class:\n   - constructor(url = 'wss://echo.websocket.org'): Stores this.url and initializes this.socket = null\n   - connect(): Creates this.socket = new WebSocket(this.url) and returns a Promise that resolves when connection is opened ('open' event) and rejects on 'error'\n   - send(message): Sends the message string via this.socket.send(message)\n   - onMessage(callback): Listens for incoming 'message' events and passes event.data to the callback\n   - close(): Closes the connection using this.socket.close()\n2. sendEchoMessage(message, url): An async function that connects, sends a message, waits for the echoed response, closes the connection, and returns the echoed string.",
+  "starterCode": "// Coding Challenge 6: WebSocket Connection\n// Connect to the public WebSocket echo server: wss://echo.websocket.org\n// Use the browser's native WebSocket API\n\n/**\n * WebSocketClient - Manages a WebSocket connection and event handling\n */\nclass WebSocketClient {\n  constructor(url = 'wss://echo.websocket.org') {\n    this.url = url;\n    this.socket = null;\n  }\n\n  /**\n   * Connect to the WebSocket server\n   * @returns {Promise<WebSocket>} Resolves with the socket when connected\n   */\n  connect() {\n    // TODO: Create this.socket = new WebSocket(this.url)\n    // Return a Promise that resolves on 'open' event and rejects on 'error'\n  }\n\n  /**\n   * Send a message through the WebSocket\n   * @param {string} message - Message to send\n   */\n  send(message) {\n    // TODO: Send the message using this.socket.send()\n  }\n\n  /**\n   * Register a callback for incoming messages\n   * @param {Function} callback - Called with event.data\n   */\n  onMessage(callback) {\n    // TODO: Listen for 'message' event and pass event.data to callback\n  }\n\n  /**\n   * Close the WebSocket connection\n   */\n  close() {\n    // TODO: Close this.socket\n  }\n}\n\n/**\n * Send a message and wait for the echoed response\n * @param {string} message - The message to send\n * @param {string} url - WebSocket server URL (defaults to wss://echo.websocket.org)\n * @returns {Promise<string>} The echoed message string from the server\n */\nasync function sendEchoMessage(message, url = 'wss://echo.websocket.org') {\n  // TODO: Connect using WebSocketClient (or new WebSocket),\n  // send the message, wait for the echo response, close the connection,\n  // and return the echoed message string\n}",
+  "requirements": [
+    "Create a 'WebSocketClient' class with constructor accepting 'url' (defaults to 'wss://echo.websocket.org')",
+    "'connect()' must create 'this.socket = new WebSocket(this.url)' and return a Promise resolving when connection is open",
+    "'send(message)' must call 'this.socket.send(message)'",
+    "'onMessage(callback)' must listen for incoming messages and invoke 'callback(event.data)'",
+    "'close()' must close 'this.socket' using 'this.socket.close()'",
+    "Implement 'sendEchoMessage(message, url)' to connect, send a message, wait for echo, close connection, and return the echoed string"
+  ],
+  "hints": [
+    "Instantiate a WebSocket with 'new WebSocket(this.url)'",
+    "In connect(), return 'new Promise((resolve, reject) => { ... })'. Inside, attach listeners for 'open' (to resolve) and 'error' (to reject)",
+    "In onMessage(callback), listen with 'this.socket.addEventListener(\"message\", e => callback(e.data))' or 'this.socket.onmessage = e => callback(e.data)'",
+    "In close(), verify 'if (this.socket) this.socket.close();'",
+    "In sendEchoMessage, you can instantiate your WebSocketClient, await client.connect(), send the message, wait for the echo in onMessage, close, and resolve with the received text"
+  ],
+  "tests": [
+    {
+      "name": "WebSocketClient class exists with constructor",
+      "functionName": "null",
+      "test": "function() { try { if (typeof WebSocketClient !== 'function') { return { success: false, message: 'WebSocketClient class does not exist' }; } const client = new WebSocketClient(); if (typeof client !== 'object' || client.url !== 'wss://echo.websocket.org') { return { success: false, message: 'WebSocketClient should set default url to \"wss://echo.websocket.org\"' }; } const custom = new WebSocketClient('wss://custom.url'); if (custom.url !== 'wss://custom.url') { return { success: false, message: 'WebSocketClient should accept custom url parameter' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "WebSocketClient class created with constructor ✓"
+    },
+    {
+      "name": "WebSocketClient has required methods",
+      "functionName": "null",
+      "test": "function() { try { const client = new WebSocketClient(); const methods = ['connect', 'send', 'onMessage', 'close']; for (const m of methods) { if (typeof client[m] !== 'function') { return { success: false, message: 'Missing method: ' + m + '()' }; } } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "All required methods (connect, send, onMessage, close) exist ✓"
+    },
+    {
+      "name": "connect() opens WebSocket connection and resolves",
+      "functionName": "null",
+      "test": "async function() { let client = null; try { client = new WebSocketClient(); const connPromise = client.connect(); if (!connPromise || typeof connPromise.then !== 'function') { return { success: false, message: 'connect() must return a Promise' }; } await connPromise; if (!client.socket) { return { success: false, message: 'client.socket was not initialized' }; } if (client.socket.readyState !== WebSocket.OPEN) { return { success: false, message: 'WebSocket readyState should be OPEN (1), got ' + client.socket.readyState }; } client.close(); return { success: true }; } catch(e) { if (client) try { client.close(); } catch(_) {} return { success: false, message: 'connect() failed: ' + e.message }; } }",
+      "successMessage": "connect() successfully opened connection to echo server ✓"
+    },
+    {
+      "name": "send() and onMessage() receive echoed message",
+      "functionName": "null",
+      "test": "async function() { let client = null; try { client = new WebSocketClient(); await client.connect(); const testMsg = 'Hello WebSocket ' + Date.now(); const received = await new Promise((resolve, reject) => { const timer = setTimeout(() => reject(new Error('Timed out waiting for message echo')), 5000); client.onMessage(data => { clearTimeout(timer); resolve(data); }); client.send(testMsg); }); client.close(); if (received !== testMsg) { return { success: false, message: 'Expected echoed message \"' + testMsg + '\", got: \"' + received + '\"' }; } return { success: true }; } catch(e) { if (client) try { client.close(); } catch(_) {} return { success: false, message: 'Echo test failed: ' + e.message }; } }",
+      "successMessage": "Successfully sent and received echoed message over WebSocket ✓"
+    },
+    {
+      "name": "close() terminates the connection",
+      "functionName": "null",
+      "test": "async function() { let client = null; try { client = new WebSocketClient(); await client.connect(); client.close(); const state = client.socket.readyState; if (state !== WebSocket.CLOSING && state !== WebSocket.CLOSED) { return { success: false, message: 'Expected socket to be CLOSING (2) or CLOSED (3), got readyState ' + state }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "close() cleanly closes the WebSocket connection ✓"
+    },
+    {
+      "name": "sendEchoMessage() sends and returns echoed text",
+      "functionName": "null",
+      "test": "async function() { try { if (typeof sendEchoMessage !== 'function') { return { success: false, message: 'sendEchoMessage function does not exist' }; } const testMsg = 'CodingChallenge-Echo-' + Math.floor(Math.random() * 10000); const echoResult = await sendEchoMessage(testMsg); if (echoResult !== testMsg) { return { success: false, message: 'Expected echo to return \"' + testMsg + '\", got: \"' + echoResult + '\"' }; } return { success: true }; } catch(e) { return { success: false, message: 'sendEchoMessage failed: ' + e.message }; } }",
+      "successMessage": "sendEchoMessage() successfully connects, echoes, and returns the message ✓"
+    }
+  ]
+}

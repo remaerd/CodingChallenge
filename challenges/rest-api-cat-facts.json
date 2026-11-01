@@ -1,0 +1,61 @@
+{
+  "id": "rest-api-cat-facts",
+  "title": "Coding Challenge 5: REST API (Cat Facts)",
+  "difficulty": "Medium",
+  "description": "Learn how to interact with a public REST API in JavaScript using fetch() and async/await. In this challenge, you will connect to the free, public Cat Facts API (https://catfact.ninja) to retrieve trivia about cats, work with query parameters, and parse JSON responses.\n\nYou need to implement three asynchronous functions:\n1. getRandomCatFact(): Makes a GET request to 'https://catfact.ninja/fact' and returns the fact string (data.fact).\n2. getShortCatFact(maxLength): Makes a GET request to 'https://catfact.ninja/fact?max_length=[maxLength]' and returns the fact string whose length is less than or equal to maxLength.\n3. getCatFacts(count): Makes a GET request to 'https://catfact.ninja/facts?limit=[count]' and returns an array containing just the fact strings extracted from the response data array.",
+  "starterCode": "// Coding Challenge 5: Public REST API (Cat Facts)\n// API Documentation: https://catfact.ninja\n// Use the browser's built-in fetch() API and async/await\n\n/**\n * 1. Fetch a single random cat fact\n * Endpoint: https://catfact.ninja/fact\n * Expected response structure: { \"fact\": \"...\", \"length\": 25 }\n * @returns {Promise<string>} The cat fact string\n */\nasync function getRandomCatFact() {\n  // TODO: Fetch from https://catfact.ninja/fact\n  // Parse JSON response and return the 'fact' property\n}\n\n/**\n * 2. Fetch a cat fact with a maximum character length\n * Endpoint: https://catfact.ninja/fact?max_length=[maxLength]\n * @param {number} maxLength - Maximum character length allowed\n * @returns {Promise<string>} The cat fact string (length <= maxLength)\n */\nasync function getShortCatFact(maxLength) {\n  // TODO: Fetch from https://catfact.ninja/fact?max_length=[maxLength]\n  // Parse JSON response and return the 'fact' property\n}\n\n/**\n * 3. Fetch multiple cat facts\n * Endpoint: https://catfact.ninja/facts?limit=[count]\n * Expected response structure: { \"data\": [ { \"fact\": \"...\", \"length\": 25 }, ... ] }\n * @param {number} count - Number of facts to fetch\n * @returns {Promise<string[]>} Array of cat fact strings\n */\nasync function getCatFacts(count) {\n  // TODO: Fetch from https://catfact.ninja/facts?limit=[count]\n  // Extract and return an array containing only the fact strings\n}",
+  "requirements": [
+    "Implement 'getRandomCatFact()' as an async function that fetches from 'https://catfact.ninja/fact'",
+    "'getRandomCatFact()' must parse the response JSON and return the 'fact' string",
+    "Implement 'getShortCatFact(maxLength)' as an async function accepting a maximum length number",
+    "'getShortCatFact(maxLength)' must fetch with '?max_length=[maxLength]' and return a fact string with length <= maxLength",
+    "Implement 'getCatFacts(count)' as an async function accepting a count number",
+    "'getCatFacts(count)' must fetch with '?limit=[count]' and return an array of count fact strings extracted from data.data"
+  ],
+  "hints": [
+    "Use 'const response = await fetch(url);' and 'const data = await response.json();' inside async functions",
+    "For simple GET requests, do not pass custom headers or mode: 'no-cors'. Standard fetch('https://catfact.ninja/fact') works out of the box",
+    "Check 'if (!response.ok)' to handle possible HTTP or rate-limit errors",
+    "For getRandomCatFact, return 'data.fact' (a string), not the entire object",
+    "For getShortCatFact(maxLength), use template literals: `https://catfact.ninja/fact?max_length=${maxLength}` and return 'data.fact'",
+    "For getCatFacts(count), the API returns an object containing a 'data' array. Use data.data.map(item => item.fact) to return an array of strings"
+  ],
+  "tests": [
+    {
+      "name": "getRandomCatFact is an async function",
+      "functionName": "null",
+      "test": "function() { try { if (typeof getRandomCatFact !== 'function') { return { success: false, message: 'getRandomCatFact function does not exist' }; } const res = getRandomCatFact(); if (!res || typeof res.then !== 'function') { return { success: false, message: 'getRandomCatFact must return a Promise (mark it async)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "getRandomCatFact is an async function ✓"
+    },
+    {
+      "name": "getRandomCatFact fetches a valid cat fact string",
+      "functionName": "null",
+      "test": "async function() { try { if (typeof getRandomCatFact !== 'function') { return { success: false, message: 'getRandomCatFact is not defined' }; } const fact = await getRandomCatFact(); if (typeof fact !== 'string' || fact.trim().length === 0) { if (typeof fact === 'object' && fact !== null) { if (fact.fact) { return { success: false, message: 'You returned the whole response object instead of the fact string. Return data.fact!' }; } return { success: false, message: 'Received an object ' + JSON.stringify(fact) + ' instead of a fact string. Ensure you awaited response.json() and returned data.fact.' }; } return { success: false, message: 'Expected a non-empty string for fact, got: ' + JSON.stringify(fact) }; } return { success: true }; } catch(e) { return { success: false, message: 'Failed fetching cat fact: ' + e.message }; } }",
+      "successMessage": "Successfully fetched random cat fact from API ✓"
+    },
+    {
+      "name": "getShortCatFact is an async function",
+      "functionName": "null",
+      "test": "function() { try { if (typeof getShortCatFact !== 'function') { return { success: false, message: 'getShortCatFact function does not exist' }; } const res = getShortCatFact(100); if (!res || typeof res.then !== 'function') { return { success: false, message: 'getShortCatFact must return a Promise (mark it async)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "getShortCatFact is an async function ✓"
+    },
+    {
+      "name": "getShortCatFact respects maxLength parameter",
+      "functionName": "null",
+      "test": "async function() { try { if (typeof getShortCatFact !== 'function') { return { success: false, message: 'getShortCatFact is not defined' }; } const maxLen = 80; const fact = await getShortCatFact(maxLen); if (typeof fact !== 'string' || fact.trim().length === 0) { if (typeof fact === 'object' && fact !== null && fact.fact) { return { success: false, message: 'You returned the whole object instead of the fact string. Return data.fact!' }; } return { success: false, message: 'Expected a non-empty string, got: ' + JSON.stringify(fact) }; } if (fact.length > maxLen) { return { success: false, message: 'Expected fact length <= ' + maxLen + ', but received ' + fact.length + ' characters: \"' + fact + '\"' }; } return { success: true }; } catch(e) { return { success: false, message: 'Error in getShortCatFact: ' + e.message }; } }",
+      "successMessage": "getShortCatFact correctly respects maxLength query parameter ✓"
+    },
+    {
+      "name": "getCatFacts is an async function",
+      "functionName": "null",
+      "test": "function() { try { if (typeof getCatFacts !== 'function') { return { success: false, message: 'getCatFacts function does not exist' }; } const res = getCatFacts(2); if (!res || typeof res.then !== 'function') { return { success: false, message: 'getCatFacts must return a Promise (mark it async)' }; } return { success: true }; } catch(e) { return { success: false, message: e.message }; } }",
+      "successMessage": "getCatFacts is an async function ✓"
+    },
+    {
+      "name": "getCatFacts(3) returns an array of 3 fact strings",
+      "functionName": "null",
+      "test": "async function() { try { if (typeof getCatFacts !== 'function') { return { success: false, message: 'getCatFacts is not defined' }; } const facts = await getCatFacts(3); if (!Array.isArray(facts)) { return { success: false, message: 'Expected getCatFacts to return an Array, got ' + typeof facts }; } if (facts.length !== 3) { return { success: false, message: 'Expected exactly 3 facts, got array of length ' + facts.length }; } const allStrings = facts.every(item => typeof item === 'string' && item.trim().length > 0); if (!allStrings) { return { success: false, message: 'Every element in the array must be a non-empty fact string. Got: ' + JSON.stringify(facts) }; } return { success: true }; } catch(e) { return { success: false, message: 'Error in getCatFacts: ' + e.message }; } }",
+      "successMessage": "getCatFacts correctly fetches and maps multiple cat facts ✓"
+    }
+  ]
+}

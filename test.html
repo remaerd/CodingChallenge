@@ -7,75 +7,8 @@
     <h1>Challenge System Test</h1>
     <div id="results"></div>
     
+    <script src="js/challenge.js"></script>
     <script>
-        // Inline the challenge system
-        const ChallengeSystem = (() => {
-            const runTests = (code, challenge) => {
-                if (!challenge || !challenge.tests) {
-                    return {
-                        passed: 0,
-                        total: 0,
-                        results: [],
-                        message: 'No tests available'
-                    };
-                }
-
-                const results = [];
-                let passed = 0;
-
-                challenge.tests.forEach((test, index) => {
-                    try {
-                        // Execute user code and test in the same scope
-                        const combinedCode = code + `\nconst __testFn = ${test.test};\n__testFn();`;
-                        const testExecutor = new Function(combinedCode + `\nreturn __testFn();`);
-                        const result = testExecutor();
-                        
-                        if (result.success) {
-                            passed++;
-                            results.push({
-                                name: test.name,
-                                success: true,
-                                message: test.successMessage || 'Test passed ✓'
-                            });
-                        } else {
-                            results.push({
-                                name: test.name,
-                                success: false,
-                                message: result.message || 'Test failed ✗'
-                            });
-                        }
-                    } catch (error) {
-                        results.push({
-                            name: test.name,
-                            success: false,
-                            message: `Error: ${error.message}`
-                        });
-                    }
-                });
-
-                return {
-                    passed,
-                    total: challenge.tests.length,
-                    results,
-                    message: `${passed}/${challenge.tests.length} tests passed`
-                };
-            };
-
-            const validateSyntax = (code) => {
-                try {
-                    new Function(code);
-                    return { valid: true, error: null };
-                } catch (error) {
-                    return { valid: false, error: error.message };
-                }
-            };
-
-            return {
-                runTests,
-                validateSyntax
-            };
-        })();
-
         // Test 1: Working code
         const workingCode = `
         class Human {
@@ -109,18 +42,22 @@
             ]
         };
 
-        const result = ChallengeSystem.runTests(workingCode, testChallenge);
-        
-        let html = `<h2>Test Results</h2>
-        <p><strong>${result.message}</strong></p>
-        <ul>`;
-        
-        result.results.forEach(r => {
-            html += `<li>${r.success ? '✓' : '✗'} ${r.name}: ${r.message}</li>`;
-        });
-        
-        html += '</ul>';
-        document.getElementById('results').innerHTML = html;
+        async function run() {
+            const result = await ChallengeSystem.runTests(workingCode, testChallenge);
+            
+            let html = `<h2>Test Results</h2>
+            <p><strong>${result.message}</strong></p>
+            <ul>`;
+            
+            result.results.forEach(r => {
+                html += `<li>${r.success ? '✓' : '✗'} ${r.name}: ${r.message}</li>`;
+            });
+            
+            html += '</ul>';
+            document.getElementById('results').innerHTML = html;
+        }
+
+        run();
     </script>
 </body>
 </html>

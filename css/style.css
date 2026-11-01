@@ -347,6 +347,12 @@ details li {
     border-left: 3px solid #b58900; /* 75% of 4px */
 }
 
+.feedback-status.running {
+    background: rgba(38, 139, 210, 0.2);
+    color: #268bd2;
+    border-left: 3px solid #268bd2;
+}
+
 .test-result {
     padding: 9px 11.25px; /* 75% of 12px 15px */
     margin-bottom: 7.5px; /* 75% of 10px */

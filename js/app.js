@@ -40,7 +40,9 @@ const App = (() => {
                     'oop-abstraction',
                     'oop-inheritance',
                     'oop-encapsulation',
-                    'oop-polymorphism'
+                    'oop-polymorphism',
+                    'rest-api-cat-facts',
+                    'websocket-echo'
                 ];
             }
 
@@ -160,12 +162,18 @@ const App = (() => {
                 if (challenges[idFromIndex]) return idFromIndex;
             }
 
-            // 3. Match by slug without "oop-" prefix (e.g. ?challenge=encapsulation)
+            // 3. Match by slug without prefix (e.g. ?challenge=encapsulation, ?challenge=cat-facts, ?challenge=websocket)
             const matchBySlug = challengeOrder.find(id => {
                 const lowerId = id.toLowerCase();
                 return lowerId === lowerParam ||
                        lowerId === `oop-${lowerParam}` ||
-                       lowerId.replace(/^oop-/, '') === lowerParam;
+                       lowerId.replace(/^oop-/, '') === lowerParam ||
+                       lowerId.replace(/^rest-api-/, '') === lowerParam ||
+                       lowerId.replace(/^websocket-/, '') === lowerParam ||
+                       lowerId === `rest-api-${lowerParam}` ||
+                       lowerId === `websocket-${lowerParam}` ||
+                       (lowerParam === 'rest' && lowerId.includes('rest')) ||
+                       (lowerParam === 'websocket' && lowerId.includes('websocket'));
             });
 
             if (matchBySlug && challenges[matchBySlug]) return matchBySlug;
@@ -269,11 +277,12 @@ const App = (() => {
         }
     };
 
-    const runTests = () => {
+    const runTests = async () => {
         if (!currentChallenge) {
             return;
         }
 
+        const runBtn = document.getElementById('run-btn');
         const code = Editor.getCode();
 
         // Check syntax first
@@ -287,9 +296,34 @@ const App = (() => {
             return;
         }
 
-        // Run tests
-        const results = ChallengeSystem.runTests(code, currentChallenge);
-        showFeedback(results.results, results.passed, results.total);
+        // Show running indicator
+        const feedbackDiv = document.getElementById('feedback');
+        feedbackDiv.innerHTML = `
+            <div class="feedback-status running">
+                <strong>Running tests...</strong>
+            </div>
+        `;
+        if (runBtn) {
+            runBtn.disabled = true;
+            runBtn.textContent = 'Testing...';
+        }
+
+        try {
+            // Run tests (supports both async and sync tests)
+            const results = await ChallengeSystem.runTests(code, currentChallenge);
+            showFeedback(results.results, results.passed, results.total);
+        } catch (error) {
+            showFeedback([{
+                name: 'Execution Error',
+                success: false,
+                message: error.message || 'Error occurred while running tests'
+            }], 0, 1);
+        } finally {
+            if (runBtn) {
+                runBtn.disabled = false;
+                runBtn.textContent = 'Run Code';
+            }
+        }
     };
 
     const showFeedback = (results, passed, total) => {

@@ -3,6 +3,8 @@
     "oop-abstraction",
     "oop-inheritance",
     "oop-encapsulation",
-    "oop-polymorphism"
+    "oop-polymorphism",
+    "rest-api-cat-facts",
+    "websocket-echo"
   ]
 }
